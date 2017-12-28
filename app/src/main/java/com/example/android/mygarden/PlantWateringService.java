@@ -39,12 +39,11 @@ public class PlantWateringService extends IntentService {
      */
     public static void startActionWaterPlant(Context context, long plantId) {
         Intent intent = new Intent(context, PlantWateringService.class);
-        intent.setAction(ACTION_WATER_PLANTS);
         intent.setAction(ACTION_WATER_PLANT);
         intent.putExtra(EXTRA_PLANT_ID, plantId);
-        intent.setAction(ACTION_WATER_PLANTS);
         context.startService(intent);
     }
+
 
     public static void startActionUpdatePlantWidgets(Context context) {
         Intent intent = new Intent(context, PlantWateringService.class);
@@ -119,9 +118,13 @@ public class PlantWateringService extends IntentService {
         }
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(this);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(this, PlantWidgetProvider.class));
+        appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetIds, R.id.widget_grid_view);
         //Now update all widgets
         PlantWidgetProvider.updatePlantWidgets(this, appWidgetManager, imgRes, plantId, canWater, appWidgetIds);
     }
 }
+
+
+
 
 
